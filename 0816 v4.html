@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>產品儀控APP - UX/UI 原型</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary-bg: #1A1D2D;
+            --secondary-bg: #2A2F45;
+            --accent-color: #D4AF37;
+            --text-color: #F0F0F0;
+            --text-secondary-color: #A0A0A0;
+            --slider-track-color: #4A4F6B;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--primary-bg);
+            overflow: hidden;
+        }
+
+        .app-container {
+            width: 100%;
+            height: 100%;
+            max-width: 450px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-image: url('data:image/jpeg;base64,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셔wPM8hXv2jbhslvaRma5cIgzknmT2VRzYnoBXlP2h9qLbUkEaKUt42LKGxvZzgbiBwAAJwMnnzywGmrk7YkU+FO2zMNv7Te8uHnfgsxwOyqOCr5KOXqSa3z2Gj/AAYfvvJ/iNYv2bdnpteX/BQD72QDBb+zGT1PUnkPQ4B6XsvaKW8SQxjCIoVR5AVGDdnRndKKSLClKVY4BSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoDG/aRt9xcfZI2+7i+JsfWTHBR5Lz7zW8bIsEtYI4U9lFC+Z7z5nkfWvJm15zNPLKfaeR2+LEkfSvX6nIrkwtzds976hGOMIwRmlKVkeiaJt/aqWVvJO/YvAftMeCr6kivJe0r57iZ5pPaZizfHoPIcPIV1vt+uylklv+vcKG9IkLn67V+tcrXNllfZHpYMbSul3YpXb+z32cwXdq1zdgvmQpGhYqBtAzuI55JI58MeNbL/wCC9mf8if8AmS/1rVYNnLLMketK9MbL2RBZQC3gBVASeJJJJ5kknma5D7UNnG2vjMB93cAPn9pfhcfaF9DWg+zLZ3d3+y3D52pXk4jU5+8I4tknkR+sMcxjrmO9ouyhd2csfNsb09JE+JfryHmBTnFpkyxzi0cT7EtqK8U1mW+8jfeqD+w5wSP7rZz5it3rwZse/ktpkniOHQhh4+IPgeB8jXqD2ce0OLacZVgqXKKC8eeDA8nTPMjv2HmAc3CakrQyxuLs63SlKokUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFePPaHYiG/nReAZi4HYSAMcDywSPQivYasf9p/Z17gLeQrukjXa6jm0YJIIHUrk8uwJ6Cs80eUa4ZcWa/7Lb1ZtOhweCMYGHqh+E/XBrRK8q9mftFm2f8AucvGI/sHPFD+weIPkflnpXQWHtWsHxvSaPzAVgPmGyfoKjHKLW5eWHJOzYe0XYC7SgMLNsIYPG+M7WAI5dQRkEcOdehryfIcszHqzEn4k5Nd1afataNwkhmj9QEYfXKn6VXXnsqmYk/Zo2f355FBPkAGb+Gqs/JcTTFwkm2c3XqP2abOa3sIy4w0hMpB5jcRt+iqa5bs17J7lLuO5vVVEiYSLhgxZwcoOPIHBJz2YxyNdvrLBHls0zZOWiFK5j2hdqvssxGJA32gOCMHiNu3H0NaPsHaH2q0hn/aRWJ8yPa+uag1s5+F2in9pXZA3BF7br/AIiNcIv6yryZf7wGB5Y6mvNle8q8s+0Dse+zpN0JaAn7uTmkR/VDeznoD8DWWSPDR04p8dM3z2L3pezuYTzaOUN/dcAH6qa3WvNnsPvwLq5gJ4yIrr5mNiG+QcfWt/wBq3yW8LzP7KKWPlw5DxPIVUfyoWX5meD/AGi7R+038zjkoYRj0QbD9cN9az+3haR1jQFmZgqqOZYnAAHma0P2T9kH2/bcXKn7Mp+8b/iMMlYv72D5Z58vU3Z/ZKws03yqk9yRyI3JFn9UMPaPVjy5Djnm4xcksmeSUYuy97K9lYtnx7x964YYlfkEGeEa9nXcTk/CtIpSr0raoyN3YpSlIClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUApSlAKUpQClKUBW3OzIJPaigf+9Gp/UVWH2U2b+1BH/hjX+lWVKAo4NgbOj9izhH91FX9BUyltGvZFHkqj+VTSgIya0jb2kU+ak/yqGk2JZuMMkBH/wDFV/lVlSgKSHYNknswQj+6g/pVjbWkcYxGionuooA+gqbSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoBSlKAUpSgFKUoD//Z');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .app-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 29, 45, 0.85);
+            backdrop-filter: blur(8px);
+        }
+
+        .app-page {
+            flex-grow: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .app-page.active {
+            display: block;
+        }
+
+        .app-nav {
+            display: flex;
+            background-color: var(--secondary-bg);
+            border-top: 1px solid var(--accent-color);
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0;
+            color: var(--text-secondary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+        }
+        .nav-item.active, .nav-item:hover {
+            color: var(--accent-color);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 15px;
+        }
+
+        /* Timer Page */
+        .timer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            height: 100%;
+        }
+
+        .timer-knob-wrapper {
+            position: relative;
+            width: 250px;
+            height: 250px;
+        }
+
+        .timer-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text-color);
+            font-size: 64px;
+            font-weight: 300;
+        }
+        .timer-display.flashing {
+            animation: flash 1s infinite;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .timer-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: transparent;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg);
+        }
+        
+        .timer-knob {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 10px solid var(--slider-track-color);
+            position: absolute;
+            box-sizing: border-box;
+            border-right-color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+        }
+
+        .timer-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: 1px solid var(--accent-color);
+            background-color: transparent;
+            color: var(--accent-color);
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+        }
+
+        /* Lighting Page */
+        .light-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: rgb(255, 255, 255);
+            margin: 20px auto;
+            border: 5px solid var(--secondary-bg);
+            transition: background-color 0.3s ease;
+        }
+
+        .breathing-fast { animation: breath-fast 0.33s infinite alternate; }
+        .breathing-medium { animation: breath-medium 1s infinite alternate; }
+        .breathing-slow { animation: breath-slow 2s infinite alternate; }
+        
+        @keyframes breath-fast { from { opacity: 0.2; } to { opacity: 1; } }
+        @keyframes breath-medium { from { opacity: 0.2; } to { opacity: 1; } }
+        @keyframes breath-slow { from { opacity: 0.2; } to { opacity: 1; } }
+
+        .control-group { margin-bottom: 25px; }
+        .control-group label {
+            display: block;
+            color: var(--text-secondary-color);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .color-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--slider-track-color);
+            outline: none;
+        }
+        .color-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        #r-slider { background: linear-gradient(90deg, var(--primary-bg), #ff0000); }
+        #g-slider { background: linear-gradient(90deg, var(--primary-bg), #00ff00); }
+        #b-slider { background: linear-gradient(90deg, var(--primary-bg), #0000ff); }
+        #r-slider::-webkit-slider-thumb { background: #ff0000; }
+        #g-slider::-webkit-slider-thumb { background: #00ff00; }
+        #b-slider::-webkit-slider-thumb { background: #0000ff; }
+
+        .freq-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .freq-btn {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            border: 1px solid var(--slider-track-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .freq-btn.active, .freq-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+            border-color: var(--accent-color);
+        }
+
+        /* Log Page */
+        .log-entry-form {
+            background-color: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .log-entry-form textarea {
+            width: 100%;
+            height: 80px;
+            background-color: var(--primary-bg);
+            border: 1px solid var(--slider-track-color);
+            border-radius: 5px;
+            color: var(--text-color);
+            padding: 10px;
+            box-sizing: border-box;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        .log-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .log-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .photo-btn {
+            background-color: var(--slider-track-color);
+            color: var(--text-color);
+        }
+        .save-btn {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+        }
+        .log-table-container {
+            max-height: calc(100vh - 400px);
+            overflow-y: auto;
+        }
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-color);
+        }
+        .log-table th, .log-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--slider-track-color);
+        }
+        .log-table th {
+            background-color: var(--secondary-bg);
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+        .log-table td {
+            color: var(--text-secondary-color);
+            font-size: 14px;
+        }
+        .log-table img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* Profile Page */
+        .profile-card {
+            background: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--slider-track-color);
+        }
+        .profile-item:last-child {
+            border-bottom: none;
+        }
+        .item-label {
+            color: var(--text-secondary-color);
+        }
+        .item-value {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        .vip-level {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Pages -->
+        <div id="timer-page" class="app-page active">
+            <h1 class="page-title">時間控制</h1>
+            <div class="timer-container">
+                <div class="timer-knob-wrapper">
+                    <div class="timer-knob"></div>
+                    <div id="timer-display" class="timer-display">15</div>
+                    <input type="range" min="15" max="60" value="15" step="1" class="timer-slider" id="timer-slider">
+                </div>
+                <div class="timer-buttons">
+                    <button id="start-btn" class="btn">開始</button>
+                    <button id="pause-btn" class="btn">暫停</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="lighting-page" class="app-page">
+            <h1 class="page-title">燈光控制</h1>
+            <div class="light-preview" id="light-preview"></div>
+
+            <div class="control-group">
+                <label>顏色 (RGB)</label>
+                <input type="range" min="0" max="255" value="255" class="color-slider" id="r-slider">
+                <input type="range" min="0" max="255" value="255" class="color-slider" id="g-slider" style="margin: 15px 0;">
+                <input type="range" min="0" max="255" value="255" class="color-slider" id="b-slider">
+            </div>
+
+            <div class="control-group">
+                <label>呼吸閃爍頻率</label>
+                <div class="freq-buttons">
+                    <button class="freq-btn" data-freq="fast">快</button>
+                    <button class="freq-btn active" data-freq="medium">中</button>
+                    <button class="freq-btn" data-freq="slow">慢</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="log-page" class="app-page">
+            <h1 class="page-title">日誌功能</h1>
+            <div class="log-entry-form">
+                <textarea placeholder="請在此輸入文字記錄..."></textarea>
+                <div class="log-actions">
+                    <button class="log-btn photo-btn">新增照片</button>
+                    <button class="log-btn save-btn">儲存記錄</button>
+                </div>
+            </div>
+            <div class="log-table-container">
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th>照片</th>
+                            <th>記錄</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2025-08-15</td>
+                            <td><img src="https://via.placeholder.com/40" alt="record"></td>
+                            <td>第一次使用，效果顯著...</td>
+                        </tr>
+                        <tr>
+                            <td>2025-08-14</td>
+                            <td><img src="https://via.placeholder.com/40" alt="record"></td>
+                            <td>今日狀況良好，持續觀察。</td>
+                        </tr>
+                        <tr>
+                            <td>2025-08-13</td>
+                            <td><img src="https://via.placeholder.com/40" alt="record"></td>
+                            <td>儀器設定為30秒，燈光...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="profile-page" class="app-page">
+            <h1 class="page-title">使用者資料</h1>
+            <div class="profile-card">
+                <div class="profile-item">
+                    <span class="item-label">姓名</span>
+                    <span class="item-value">陳大文</span>
+                </div>
+                <div class="profile-item">
+                    <span class="item-label">使用者 ID</span>
+                    <span class="item-value">USER-12345678</span>
+                </div>
+                <div class="profile-item">
+                    <span class="item-label">電子郵箱</span>
+                    <span class="item-value">d.chen@example.com</span>
+                </div>
+                <div class="profile-item">
+                    <span class="item-label">機器號碼</span>
+                    <span class="item-value">SN-987654321</span>
+                </div>
+                <div class="profile-item">
+                    <span class="item-label">VIP 等級</span>
+                    <span class="item-value vip-level">金卡會員</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="app-nav">
+            <div class="nav-item active" data-page="timer-page">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M12 20C7.6 20 4 16.4 4 12S7.6 4 12 4 20 7.6 20 12 16.4 20 12 20M12.5 7H11V13L16.5 16.2L17.2 14.9L12.5 12.2V7Z" /></svg>
+                <span>時間</span>
+            </div>
+            <div class="nav-item" data-page="lighting-page">
+                <svg viewBox="0 0 24 24"><path d="M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5Z" /></svg>
+                <span>燈光</span>
+            </div>
+            <div class="nav-item" data-page="log-page">
+                <svg viewBox="0 0 24 24"><path d="M19,3H5C3.9,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3M14,17H7V15H14V17M17,13H7V11H17V13M17,9H7V7H17V9Z" /></svg>
+                <span>日誌</span>
+            </div>
+            <div class="nav-item" data-page="profile-page">
+                <svg viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
+                <span>我的</span>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation
+            const navItems = document.querySelectorAll('.nav-item');
+            const pages = document.querySelectorAll('.app-page');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    navItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+
+                    pages.forEach(p => p.classList.remove('active'));
+                    document.getElementById(item.dataset.page).classList.add('active');
+                });
+            });
+
+            // Timer Page Logic
+            const timerSlider = document.getElementById('timer-slider');
+            const timerDisplay = document.getElementById('timer-display');
+            const startBtn = document.getElementById('start-btn');
+            const pauseBtn = document.getElementById('pause-btn');
+
+            let countdown;
+            let timerValue = 15;
+            let isPaused = false;
+
+            timerSlider.addEventListener('input', () => {
+                timerValue = parseInt(timerSlider.value);
+                timerDisplay.textContent = timerValue;
+                if(countdown) {
+                    clearInterval(countdown);
+                    startBtn.textContent = "開始";
+                }
+            });
+
+            function startTimer() {
+                isPaused = false;
+                countdown = setInterval(() => {
+                    if (!isPaused) {
+                        timerValue--;
+                        timerDisplay.textContent = timerValue;
+                        if (timerValue <= 0) {
+                            clearInterval(countdown);
+                            timerDisplay.classList.add('flashing');
+                            setTimeout(() => {
+                                timerDisplay.classList.remove('flashing');
+                                timerValue = parseInt(timerSlider.value);
+                                timerDisplay.textContent = timerValue;
+                                startBtn.textContent = "開始";
+                            }, 5000);
+                        }
+                    }
+                }, 1000);
+            }
+
+            startBtn.addEventListener('click', () => {
+                if (startBtn.textContent === "開始") {
+                    clearInterval(countdown);
+                    timerValue = parseInt(timerSlider.value);
+                    timerDisplay.textContent = timerValue;
+                    startTimer();
+                    startBtn.textContent = "重設";
+                } else {
+                    clearInterval(countdown);
+                    timerValue = parseInt(timerSlider.value);
+                    timerDisplay.textContent = timerValue;
+                    startBtn.textContent = "開始";
+                }
+            });
+
+            pauseBtn.addEventListener('click', () => {
+                isPaused = !isPaused;
+                pauseBtn.textContent = isPaused ? "繼續" : "暫停";
+            });
+
+
+            // Lighting Page Logic
+            const rSlider = document.getElementById('r-slider');
+            const gSlider = document.getElementById('g-slider');
+            const bSlider = document.getElementById('b-slider');
+            const lightPreview = document.getElementById('light-preview');
+            const freqBtns = document.querySelectorAll('.freq-btn');
+
+            function updateLightColor() {
+                const r = rSlider.value;
+                const g = gSlider.value;
+                const b = bSlider.value;
+                lightPreview.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+            }
+
+            [rSlider, gSlider, bSlider].forEach(slider => {
+                slider.addEventListener('input', updateLightColor);
+            });
+
+            freqBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    freqBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    lightPreview.classList.remove('breathing-fast', 'breathing-medium', 'breathing-slow');
+                    const freq = btn.dataset.freq;
+                    if (freq === 'fast') lightPreview.classList.add('breathing-fast');
+                    if (freq === 'medium') lightPreview.classList.add('breathing-medium');
+                    if (freq === 'slow') lightPreview.classList.add('breathing-slow');
+                });
+            });
+
+            // Initial state
+            updateLightColor();
+            lightPreview.classList.add('breathing-medium');
+
+        });
+    </script>
+</body>
+</html>
